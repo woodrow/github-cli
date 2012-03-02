@@ -178,7 +178,10 @@ class Pager(object):
         self.cmd = ''
 
         if hasattr(sys.stdout, 'isatty') and sys.stdout.isatty():
-            pager_commands = ['more -EMR', 'more', 'less -MR', 'less']
+            pager_commands = ['less -FSRX',
+                              'less',
+                              'more -EMR',
+                              'more']
             for cmd in pager_commands:
                 if hasattr(os, 'system') and \
                               os.system('(%s) 2>/dev/null' % cmd) == 0:
@@ -197,8 +200,6 @@ class Pager(object):
             self.file.write("%s\n" % text)
 
     def close(self):
-        if 'less' in self.cmd:
-            self.write("press q to quit")
         if self.proc:
             self.file.close()
             try:
