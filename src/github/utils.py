@@ -178,12 +178,13 @@ class Pager(object):
         self.cmd = ''
 
         if hasattr(sys.stdout, 'isatty') and sys.stdout.isatty():
-            pager_commands = ['less -FSRX',
+            pager_commands = [os.getenv('PAGER'),
+                              'less -FRSX',
                               'less',
                               'more -EMR',
                               'more']
             for cmd in pager_commands:
-                if hasattr(os, 'system') and \
+                if cmd and hasattr(os, 'system') and \
                               os.system('(%s) 2>/dev/null' % cmd) == 0:
                     self.proc = subprocess.Popen([cmd], shell=True,
                         stdin=subprocess.PIPE, stderr=subprocess.PIPE)
