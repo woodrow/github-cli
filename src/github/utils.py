@@ -141,7 +141,7 @@ def get_config():
 def edit_text(text):
     editor = os.getenv('EDITOR', 'vi')
 
-    f = tempfile.NamedTemporaryFile()
+    f = tempfile.NamedTemporaryFile(suffix='.md')
     f.write(text)
     f.flush()
 
